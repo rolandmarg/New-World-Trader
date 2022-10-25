@@ -1,7 +1,7 @@
+import fs from 'fs';
+import fetch from 'node-fetch';
 import * as dotenv from 'dotenv'
 dotenv.config()
-import fetch from 'node-fetch';
-import fs from 'fs';
 
 async function bootstrap() {
   let page = 1;
