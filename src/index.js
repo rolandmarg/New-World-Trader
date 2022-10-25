@@ -1,7 +1,7 @@
-import recipe from './recipe.js';
+import item from './item.js';
 
 async function bootstrap() {
-  const items = recipe().slice(0, 5);
+  const items = item();
 
   console.log(items);
 }

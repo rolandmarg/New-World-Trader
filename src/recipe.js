@@ -30,65 +30,19 @@ function transformer(item) {
   };
 }
 
-function enrichPrice(item) {
-  if (item.name === 'Orichalcum Arrow') {
-    console.log('sop');
-  }
-  item.price = price(item.name);
-  if (!item.price) {
-    return;
-  }
-
-  // TODO skip items that donot have price (event on reagents)
-  // TODO add recursion for reagents
-  item.resources.forEach((resource) => {
-    if (!resource.choices) {
-      resource.price = price(resource.name);
-    } else {
-      resource.choices.forEach((choice) => {
-        choice.price = price(choice.name);
-      });
-      resource.choices.sort((a, b) => {
-        if (!a.price) {
-          return 1;
-        }
-        if (!b.price) {
-          return -1;
-        }
-        return a.price.price - b.price.price;
-      });
-      resource.price = resource.choices[0].price;
-    }
-  });
-
-  const itemPrices = item.resources
-    .filter((r) => r.price)
-    .map((r) => r.price.price * r.quantity);
-  if (!itemPrices.length) {
-    console.info(`skipping ${item.name}, no item prices`);
-    return;
-  }
-  item.sellPrice = item.price.price * item.outputQuantity;
-  item.craftPrice = itemPrices.reduce((acc, val) => acc + val, 0);
-}
-
 recipes.forEach((i) => {
   const item = transformer(i);
-
-  enrichPrice(item);
 
   map[item.name] = item;
 });
 
 export default function get(name) {
   if (name) {
+    if (!map[name]) {
+      throw new Error('Recipe not found for ' + name);
+    }
     return map[name];
   }
 
-  const items = Object.values(map);
-  items.sort(
-    (a, b) => b.sellPrice - a.craftPrice - (a.sellPrice - a.craftPrice)
-  );
-
-  return items;
+  return Object.values(map);
 }

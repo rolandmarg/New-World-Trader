@@ -18,5 +18,13 @@ prices.forEach((i) => {
 });
 
 export default function get(name) {
-  return map[name];
+  if (name) {
+    if (!map[name]) {
+      throw new Error('Price not found for ' + name);
+    }
+
+    return map[name];
+  }
+
+  return Object.values(map);
 }
