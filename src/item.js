@@ -34,12 +34,8 @@ function enrichPrice(item) {
   }
   item.sellPrice = item.price.price * item.outputQuantity;
   item.craftPrice = itemPrices.reduce((acc, val) => acc + val, 0);
+  item.profit = Math.floor(item.sellPrice - item.craftPrice);
 }
-
-// const items = Object.values(map);
-//   items.sort(
-//     (a, b) => b.sellPrice - a.craftPrice - (a.sellPrice - a.craftPrice)
-//   );
 
 export default function get() {
   const recipes = recipe();
@@ -54,6 +50,8 @@ export default function get() {
       // console.error(e);
     }
   }
+
+  items.sort((a, b) => b.profit - a.profit);
 
   return items;
 }

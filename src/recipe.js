@@ -1,4 +1,3 @@
-import price from './price.js';
 import recipes from '../data/recipes.json' assert { type: 'json' };
 
 // stores recipes by name
@@ -30,11 +29,17 @@ function transformer(item) {
   };
 }
 
-recipes.forEach((i) => {
-  const item = transformer(i);
+// TODO add recursion for resources
+function initRecipes() {
+  recipes.forEach((i) => {
+    const item = transformer(i);
 
-  map[item.name] = item;
-});
+    map[item.name] = item;
+  });
+
+}
+
+initRecipes();
 
 export default function get(name) {
   if (name) {
