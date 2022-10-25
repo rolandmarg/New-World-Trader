@@ -51,7 +51,16 @@ export default function get() {
     }
   }
 
-  items.sort((a, b) => b.profit - a.profit);
+  items.sort((a, b) => {
+    if (b.tradeSkill > a.tradeSkill) {
+      return 1;
+    } else if (b.tradeSkill < a.tradeSkill) {
+      return -1;
+    } else {
+      return b.profit - a.profit;
+    }
+  }
+  );
 
   return items;
 }
