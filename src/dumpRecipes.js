@@ -1,7 +1,7 @@
 import fs from 'fs';
 import fetch from 'node-fetch';
-import * as dotenv from 'dotenv'
-dotenv.config()
+import * as dotenv from 'dotenv';
+dotenv.config();
 
 async function bootstrap() {
   let page = 1;
@@ -21,10 +21,11 @@ async function bootstrap() {
     response = await fetch(url);
     data = await response.json();
     recipes.push(...data.rows);
-
   }
 
-  fs.writeFileSync(`./data/recipes.json`, JSON.stringify(recipes), { enconding: 'utf8' });
+  fs.writeFileSync(`./data/recipes.json`, JSON.stringify(recipes), {
+    encoding: 'utf8',
+  });
 }
 
 bootstrap();

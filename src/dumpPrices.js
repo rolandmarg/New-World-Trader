@@ -3,7 +3,7 @@ import { pipeline } from 'stream';
 import { promisify } from 'util';
 import fetch from 'node-fetch';
 import * as dotenv from 'dotenv';
-dotenv.config()
+dotenv.config();
 
 async function bootstrap() {
   const eldoradoId = 2;
